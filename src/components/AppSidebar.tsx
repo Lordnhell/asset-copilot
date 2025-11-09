@@ -1,4 +1,4 @@
-import { Home, TrendingUp, FileText, Settings, PieChart, Bell, Shield, BookOpen, Users, Key, MessageCircle, User } from "lucide-react";
+import { Home, TrendingUp, Database, Settings, User } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { AlertsCenter } from "@/components/AlertsCenter";
 import {
@@ -15,15 +15,8 @@ import {
 const menuItems = [
   { title: "Co-Pilot Dashboard", url: "/dashboard", icon: Home },
   { title: "Portfolio Health", url: "/portfolio-health", icon: TrendingUp },
-  { title: "Analyses & Reports", url: "/analyses-reports", icon: FileText },
-  { title: "Scenario Studio", url: "/scenario-studio", icon: Settings },
-  { title: "Allocations & Trades", url: "/allocations-trades", icon: PieChart },
-  { title: "Notifications", url: "/notifications", icon: Bell },
-  { title: "Compliance & Audit", url: "/compliance-audit", icon: Shield },
-  { title: "Knowledge Hub", url: "/knowledge-hub", icon: BookOpen },
-  { title: "Team & Permissions", url: "/team-permissions", icon: Users },
-  { title: "Integrations & API Keys", url: "/integrations", icon: Key },
-  { title: "Support", url: "/support", icon: MessageCircle },
+  { title: "Data Sources", url: "/data-sources", icon: Database },
+  { title: "Fund Settings", url: "/fund-settings", icon: Settings },
 ];
 
 export function AppSidebar() {
