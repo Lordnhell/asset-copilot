@@ -12,8 +12,8 @@ const Calculating = () => {
   };
 
   const steps = [
-    { icon: "🔍", text: "Selecting optimal quant models..." },
-    { icon: "⚙️", text: "Calculating DV01, Z-Spread, Scenarios..." },
+    { icon: "🔍", text: "Selecting curves and market data..." },
+    { icon: "⚙️", text: "Calculating DV01, OAS, scenarios..." },
     { icon: "📊", text: "Synthesizing results with Co-Pilot..." },
   ];
 

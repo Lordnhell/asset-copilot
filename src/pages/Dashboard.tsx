@@ -21,15 +21,15 @@ const Dashboard = () => {
   const [selectedQuotations, setSelectedQuotations] = useState<number[]>([]);
 
   const parsedQuotations = [
-    { id: 1, issuer: "NVDA", product: "FCN", notional: "$5M", coupon: "8.5%", barrier: "70%", date: "Today" },
-    { id: 2, issuer: "TSLA", product: "Autocallable", notional: "$3M", coupon: "12%", barrier: "65%", date: "Today" },
-    { id: 3, issuer: "AAPL", product: "Reverse Convertible", notional: "$4M", coupon: "10%", barrier: "75%", date: "Yesterday" },
+    { id: 1, bank: "J.P. Morgan", product: "UST 10Y 2034", status: "ready" },
+    { id: 2, bank: "UOB Kay Hian", product: "SGS 10Y 2033", status: "ready" },
+    { id: 3, bank: "DBS Bank", product: "Temasek 2030", status: "ready" },
   ];
 
   const recentAnalyses = [
-    { title: "DRAFT: NVDA FCN Analysis", status: "draft", date: "Today" },
-    { title: "JPM Corporate Bonds - Sep 15", status: "completed", date: "Sep 15" },
-    { title: "UOB Structured Note - Sep 14", status: "completed", date: "Sep 14" },
+    { title: "DRAFT: UST 10Y 2034 Analysis", status: "draft", date: "Today" },
+    { title: "JPM Temasek 2030 Comparison - Sep 15", status: "completed", date: "Sep 15" },
+    { title: "UOB SGS 2033 Quote Review - Sep 14", status: "completed", date: "Sep 14" },
   ];
 
   const toggleQuotation = (id: number) => {
@@ -48,20 +48,19 @@ const Dashboard = () => {
     ],
     topIssuers: [
       { name: "US Treasury", exposure: 4200000, percent: 28 },
-      { name: "Apple Inc", exposure: 3800000, percent: 25 },
-      { name: "Microsoft", exposure: 2100000, percent: 14 },
-      { name: "JPMorgan", exposure: 1900000, percent: 13 },
-      { name: "Goldman Sachs", exposure: 1500000, percent: 10 },
+      { name: "Temasek", exposure: 3800000, percent: 25 },
+      { name: "DBS Bank", exposure: 2100000, percent: 14 },
+      { name: "UOB Bank", exposure: 1900000, percent: 13 },
+      { name: "CapitaLand", exposure: 1500000, percent: 10 },
     ],
     currencies: [
-      { code: "USD", percent: 72, status: "ok" },
-      { code: "EUR", percent: 18, status: "ok" },
-      { code: "GBP", percent: 10, status: "ok" },
+      { code: "USD", percent: 55, status: "ok" },
+      { code: "SGD", percent: 35, status: "ok" },
+      { code: "AUD", percent: 10, status: "ok" },
     ],
     sectors: [
-      { name: "US Equities", percent: 58, limit: 60, status: "warning" },
-      { name: "Corporate Bonds", percent: 25, limit: 30, status: "ok" },
-      { name: "Structured Products", percent: 17, limit: 20, status: "ok" },
+      { name: "Sovereign Bonds", percent: 60, limit: 70, status: "ok" },
+      { name: "Corporate Bonds", percent: 40, limit: 45, status: "ok" },
     ],
   };
 
@@ -96,7 +95,7 @@ const Dashboard = () => {
                 </div>
 
                 <Textarea 
-                  placeholder="Describe what you want to analyze... E.g., 'Compare the risk-return profiles of these NVDA structured notes against our current portfolio limits'" 
+                  placeholder="Describe what you want to analyze... E.g., 'Compare the risk-return profiles of these bond quotes against our current portfolio limits'" 
                   className="mb-4 min-h-[100px] text-base"
                   value={command} 
                   onChange={(e) => setCommand(e.target.value)} 
@@ -120,22 +119,9 @@ const Dashboard = () => {
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
-                                <span className="font-semibold text-foreground">{quote.issuer} {quote.product}</span>
-                                <span className="text-xs text-muted-foreground">{quote.date}</span>
-                              </div>
-                              <div className="grid grid-cols-4 gap-3 text-sm">
-                                <div>
-                                  <span className="text-muted-foreground">Notional: </span>
-                                  <span className="text-foreground font-medium">{quote.notional}</span>
-                                </div>
-                                <div>
-                                  <span className="text-muted-foreground">Coupon: </span>
-                                  <span className="text-foreground font-medium">{quote.coupon}</span>
-                                </div>
-                                <div>
-                                  <span className="text-muted-foreground">Barrier: </span>
-                                  <span className="text-foreground font-medium">{quote.barrier}</span>
-                                </div>
+                                <span className="font-semibold text-foreground">{quote.bank}</span>
+                                <span className="font-semibold text-foreground">{quote.product}</span>
+                                <span className="text-xs text-muted-foreground">{quote.status}</span>
                               </div>
                             </div>
                             {selectedQuotations.includes(quote.id) && (
@@ -284,11 +270,11 @@ const Dashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex items-center gap-2">
                     <span className="text-success">✓</span>
-                    <span className="text-sm text-foreground">IR Exposure: $12,500 DV01 (Within Limit)</span>
+                    <span className="text-sm text-foreground">Total DV01: $12,500 (Within Limit)</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-warning">⚠️</span>
-                    <span className="text-sm text-foreground">High Concentration Alert: US Equities (58%)</span>
+                    <span className="text-success">✓</span>
+                    <span className="text-sm text-foreground">Top Issuer: US Treasury 28% (Healthy)</span>
                   </div>
                 </div>
               </CardContent>

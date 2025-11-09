@@ -12,8 +12,8 @@ const Processing = () => {
   };
 
   const steps = [
-    { icon: "🔄", text: "Parsing your documents..." },
-    { icon: "🤖", text: "Extracting product terms with AI..." },
+    { icon: "🔄", text: "Parsing your bond term sheets..." },
+    { icon: "🤖", text: "Extracting bond terms with AI..." },
     { icon: "✅", text: "Data extraction complete!" },
   ];
 

@@ -13,41 +13,53 @@ const Confirmation = () => {
     {
       id: 1,
       bank: "J.P. Morgan",
-      product: "FCN on NVDA",
+      product: "U.S. Treasury 10Y 2034",
       terms: {
-        underlying: "NVIDIA Corp",
+        issuer: "United States Treasury",
+        currency: "USD",
         notional: "$1,000,000",
-        strike: "$485.00",
-        maturity: "6 months",
-        coupon: "12.5% p.a.",
+        priceClean: "98.20",
+        yieldToMaturity: "4.35%",
+        couponRate: "4.25%",
+        couponFreq: "Semiannual",
+        maturityDate: "2034-11-15",
+        rating: "AAA",
       },
-      source: "Email: 'FCN Pricing - NVDA'",
+      source: "Email: 'UST 10Y Pricing'",
     },
     {
       id: 2,
       bank: "UOB Kay Hian",
-      product: "FCN on NVDA",
+      product: "SGS 10Y 2033",
       terms: {
-        underlying: "NVIDIA Corp",
+        issuer: "Singapore Government",
+        currency: "SGD",
         notional: "$1,000,000",
-        strike: "$480.00",
-        maturity: "6 months",
-        coupon: "13.2% p.a.",
+        priceClean: "101.10",
+        yieldToMaturity: "2.95%",
+        couponRate: "3.00%",
+        couponFreq: "Semiannual",
+        maturityDate: "2033-06-01",
+        rating: "AAA",
       },
-      source: "Email: 'NVDA FCN Terms'",
+      source: "Email: 'SGS 2033 Quote'",
     },
     {
       id: 3,
       bank: "DBS Bank",
-      product: "FCN on NVDA",
+      product: "Temasek 2030",
       terms: {
-        underlying: "NVIDIA Corp",
+        issuer: "Temasek Holdings",
+        currency: "SGD",
         notional: "$1,000,000",
-        strike: "$490.00",
-        maturity: "6 months",
-        coupon: "11.8% p.a.",
+        priceClean: "100.40",
+        yieldToMaturity: "3.45%",
+        couponRate: "3.50%",
+        couponFreq: "Semiannual",
+        maturityDate: "2030-08-15",
+        rating: "AAA",
       },
-      source: "PDF Upload: 'dbs_fcn_quote.pdf'",
+      source: "PDF: 'temasek_2030.pdf'",
     },
   ];
 
@@ -83,8 +95,8 @@ const Confirmation = () => {
         </div>
 
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Confirm Quotation Details</h1>
-          <p className="text-muted-foreground">Please verify the details we extracted before risk analysis</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Confirm Bond Quotation Details</h1>
+          <p className="text-muted-foreground">Please verify the bond details we extracted before risk analysis</p>
         </div>
 
         <div className="space-y-6 mb-8">

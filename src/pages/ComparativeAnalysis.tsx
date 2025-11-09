@@ -28,41 +28,53 @@ const ComparativeAnalysis = () => {
     {
       id: 1,
       bank: "UOB Kay Hian",
+      security: "SGS 10Y 2033",
       score: 82,
       scoreColor: "text-success",
       metrics: {
-        estimatedReturn: "13.2% p.a.",
-        estimatedVolatility: "28.5%",
-        varImpact: "$42,300",
+        yieldToMaturity: "2.95%",
+        duration: "8.2 years",
+        dv01Per1mm: "$78",
+        oasSpread: "0 bps",
       },
-      liquidityScore: 78,
-      insight: "Best risk-adjusted profile with optimal strike positioning. High coupon compensates for moderate volatility exposure.",
+      liquidityScore: 88,
+      rating: "AAA",
+      currency: "SGD",
+      insight: "Best risk-adjusted profile with excellent sovereign credit quality. High liquidity score and tight spread make this ideal for core portfolio holdings.",
     },
     {
       id: 2,
       bank: "J.P. Morgan",
+      security: "UST 10Y 2034",
       score: 76,
       scoreColor: "text-warning",
       metrics: {
-        estimatedReturn: "12.5% p.a.",
-        estimatedVolatility: "26.2%",
-        varImpact: "$38,900",
+        yieldToMaturity: "4.35%",
+        duration: "8.9 years",
+        dv01Per1mm: "$85",
+        oasSpread: "12 bps",
       },
-      liquidityScore: 85,
-      insight: "Lower volatility but slightly lower coupon. Excellent liquidity profile makes this suitable for shorter holding periods.",
+      liquidityScore: 90,
+      rating: "AAA",
+      currency: "USD",
+      insight: "Higher yield compensates for FX exposure. Excellent liquidity profile and AAA rating. Consider currency hedge cost when sizing.",
     },
     {
       id: 3,
       bank: "DBS Bank",
+      security: "Temasek 2030",
       score: 68,
       scoreColor: "text-destructive",
       metrics: {
-        estimatedReturn: "11.8% p.a.",
-        estimatedVolatility: "24.8%",
-        varImpact: "$36,500",
+        yieldToMaturity: "3.45%",
+        duration: "5.4 years",
+        dv01Per1mm: "$52",
+        oasSpread: "45 bps",
       },
-      liquidityScore: 72,
-      insight: "Conservative strike with lower coupon. Best suited for risk-averse mandates but below target Sharpe ratio.",
+      liquidityScore: 82,
+      rating: "AAA",
+      currency: "SGD",
+      insight: "Corporate credit with AAA rating. Moderate spread over SGS. Lower duration reduces interest rate risk but liquidity slightly below sovereigns.",
     },
   ];
 
@@ -89,28 +101,31 @@ const ComparativeAnalysis = () => {
   };
 
   const calculatePortfolioMetrics = () => {
-    const weightedReturn = analyses.reduce((sum, analysis, idx) => {
-      const returnPercent = parseFloat(analysis.metrics.estimatedReturn);
-      return sum + (returnPercent * allocations[idx] / 100);
+    const weightedYield = analyses.reduce((sum, analysis, idx) => {
+      const yieldPercent = parseFloat(analysis.metrics.yieldToMaturity);
+      return sum + (yieldPercent * allocations[idx] / 100);
     }, 0);
 
-    const weightedVolatility = analyses.reduce((sum, analysis, idx) => {
-      const volPercent = parseFloat(analysis.metrics.estimatedVolatility);
-      return sum + (volPercent * allocations[idx] / 100);
+    const weightedDuration = analyses.reduce((sum, analysis, idx) => {
+      const durationYears = parseFloat(analysis.metrics.duration);
+      return sum + (durationYears * allocations[idx] / 100);
     }, 0);
 
-    const weightedVaR = analyses.reduce((sum, analysis, idx) => {
-      const varValue = parseFloat(analysis.metrics.varImpact.replace(/[$,]/g, ''));
-      return sum + (varValue * allocations[idx] / 100);
+    const weightedDV01 = analyses.reduce((sum, analysis, idx) => {
+      const dv01Value = parseFloat(analysis.metrics.dv01Per1mm.replace(/[$,]/g, ''));
+      return sum + (dv01Value * allocations[idx] / 100);
     }, 0);
 
-    const sharpeRatio = weightedReturn / weightedVolatility;
+    const weightedSpread = analyses.reduce((sum, analysis, idx) => {
+      const spreadBps = parseFloat(analysis.metrics.oasSpread);
+      return sum + (spreadBps * allocations[idx] / 100);
+    }, 0);
 
     return {
-      weightedReturn: weightedReturn.toFixed(1),
-      weightedVolatility: weightedVolatility.toFixed(1),
-      weightedVaR: Math.round(weightedVaR).toLocaleString(),
-      sharpeRatio: sharpeRatio.toFixed(2),
+      weightedYield: weightedYield.toFixed(2),
+      weightedDuration: weightedDuration.toFixed(1),
+      weightedDV01: Math.round(weightedDV01).toLocaleString(),
+      weightedSpread: Math.round(weightedSpread),
       newDV01: 15200, // Mock value
     };
   };
@@ -225,7 +240,7 @@ const ComparativeAnalysis = () => {
         </div>
 
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Comparative Analysis: Your NVDA FCN Quotes</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Comparative Bond Analysis</h1>
           <p className="text-muted-foreground">AI-powered risk assessment and recommendations</p>
         </div>
 
@@ -238,10 +253,9 @@ const ComparativeAnalysis = () => {
             <div className="flex-1">
               <h2 className="text-lg font-semibold text-foreground mb-2">Co-Pilot Insight</h2>
               <p className="text-foreground">
-                Based on your IPS, <span className="font-semibold">Quote B (UOB Kay Hian)</span> presents the best 
-                risk-adjusted profile with a Sharpe ratio of 1.62, exceeding your target of 1.50. However, note the 
-                high volatility (28.5%) which brings you close to your concentration limit. Consider sizing this position 
-                at 70-80% of your typical allocation.
+                Based on your IPS and remaining DV01 headroom, <span className="font-semibold">SGS 10Y 2033 (UOB Kay Hian)</span> presents 
+                the best risk-adjusted choice. AAA sovereign credit with excellent liquidity and minimal spread. 
+                The lower DV01 per $1mm allows comfortable position sizing within your interest rate risk limits.
               </p>
             </div>
           </div>
@@ -256,7 +270,7 @@ const ComparativeAnalysis = () => {
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="text-xl font-bold text-foreground mb-1">{analysis.bank}</h3>
-                    <Badge variant="outline" className="border-border">FCN - NVDA</Badge>
+                    <Badge variant="outline" className="border-border">{analysis.security}</Badge>
                   </div>
                 </div>
                 <div className={`text-5xl font-bold ${analysis.scoreColor} mb-2`}>
@@ -271,20 +285,25 @@ const ComparativeAnalysis = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground flex items-center gap-2">
                     <TrendingUp className="h-4 w-4" />
-                    Estimated Return
+                    Yield to Maturity
                   </span>
-                  <span className="font-semibold text-foreground">{analysis.metrics.estimatedReturn}</span>
+                  <span className="font-semibold text-foreground">{analysis.metrics.yieldToMaturity}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4" />
-                    Est. Volatility
-                  </span>
-                  <span className="font-semibold text-foreground">{analysis.metrics.estimatedVolatility}</span>
+                  <span className="text-sm text-muted-foreground">Duration</span>
+                  <span className="font-semibold text-foreground">{analysis.metrics.duration}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">VaR Impact (95%)</span>
-                  <span className="font-semibold text-foreground">{analysis.metrics.varImpact}</span>
+                  <span className="text-sm text-muted-foreground">DV01 per $1mm</span>
+                  <span className="font-semibold text-foreground">{analysis.metrics.dv01Per1mm}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">OAS Spread</span>
+                  <span className="font-semibold text-foreground">{analysis.metrics.oasSpread}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">Rating / Currency</span>
+                  <span className="font-semibold text-foreground">{analysis.rating} / {analysis.currency}</span>
                 </div>
               </div>
 
@@ -359,20 +378,20 @@ const ComparativeAnalysis = () => {
                 <Card className="bg-accent/10 border-accent/20 p-4">
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Combined Sharpe Ratio</span>
-                      <span className="text-lg font-bold text-success">{portfolioMetrics.sharpeRatio}</span>
+                      <span className="text-sm text-muted-foreground">Weighted Yield</span>
+                      <span className="text-lg font-bold text-success">{portfolioMetrics.weightedYield}%</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Weighted Return</span>
-                      <span className="text-sm font-semibold text-foreground">{portfolioMetrics.weightedReturn}% p.a.</span>
+                      <span className="text-sm text-muted-foreground">Weighted Duration</span>
+                      <span className="text-sm font-semibold text-foreground">{portfolioMetrics.weightedDuration} years</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Weighted Volatility</span>
-                      <span className="text-sm font-semibold text-foreground">{portfolioMetrics.weightedVolatility}%</span>
+                      <span className="text-sm text-muted-foreground">Weighted DV01 per $1mm</span>
+                      <span className="text-sm font-semibold text-foreground">${portfolioMetrics.weightedDV01}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Combined VaR (95%)</span>
-                      <span className="text-sm font-semibold text-foreground">${portfolioMetrics.weightedVaR}</span>
+                      <span className="text-sm text-muted-foreground">Weighted OAS Spread</span>
+                      <span className="text-sm font-semibold text-foreground">{portfolioMetrics.weightedSpread} bps</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">New Portfolio DV01</span>
@@ -391,11 +410,11 @@ const ComparativeAnalysis = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-success" />
-                      <span className="text-sm text-foreground">Target Sharpe ratio exceeded (1.62 / 1.50)</span>
+                      <span className="text-sm text-foreground">Weighted yield meets target (3.25% / 3.00%)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <AlertTriangle className="w-4 h-4 text-warning" />
-                      <span className="text-sm text-foreground">High volatility - consider 70-80% sizing</span>
+                      <span className="text-sm text-foreground">USD exposure present - consider FX hedging</span>
                     </div>
                   </div>
                 </Card>

@@ -79,7 +79,7 @@ const DataSources = () => {
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-3xl font-bold text-foreground">
-                Connected Data Sources
+                Bond Quote Data Sources
               </h1>
           <Button>
             <Plus className="w-4 h-4 mr-2" />
