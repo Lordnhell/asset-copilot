@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Upload } from "lucide-react";
+import ProgressSteps from "@/components/ProgressSteps";
 
 const FundSetup = () => {
   const navigate = useNavigate();
@@ -14,110 +15,139 @@ const FundSetup = () => {
   const [concentration, setConcentration] = useState("15");
   const [sharpeRatio, setSharpeRatio] = useState("1.5");
 
+  const steps = [
+    { label: "Account", status: "completed" as const },
+    { label: "Fund Setup", status: "active" as const },
+    { label: "Data Integration", status: "pending" as const },
+  ];
+
   const handleNext = () => {
     navigate("/data-integration");
   };
 
   return (
-    <div className="min-h-screen bg-background p-6 md:p-12 animate-fade-in">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Fund & Policy Setup</h1>
-          <p className="text-muted-foreground">Configure your fund parameters and risk policies</p>
-        </div>
+    <div className="min-h-screen bg-background p-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Left Panel - Progress */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-6">
+              <h2 className="text-sm font-semibold text-muted-foreground mb-4">
+                ONBOARDING PROGRESS
+              </h2>
+              <ProgressSteps steps={steps} />
+            </div>
+          </div>
 
-        <Card className="bg-card border-border p-8 space-y-8">
-          {/* Fund Details Section */}
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-foreground">Fund Details</h2>
-            
-            <div className="space-y-2">
-              <Label htmlFor="fundName">Fund Name *</Label>
-              <Input
-                id="fundName"
-                value={fundName}
-                onChange={(e) => setFundName(e.target.value)}
-                placeholder="e.g., Alpha Growth Fund"
-                className="bg-input border-border text-foreground"
-              />
+          {/* Main Content */}
+          <div className="lg:col-span-3">
+            <div className="mb-6">
+              <h1 className="text-3xl font-bold text-foreground mb-2">
+                Set up your first fund
+              </h1>
+              <p className="text-muted-foreground">
+                Configure your fund details and risk parameters
+              </p>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="clientName">Client Name (Optional)</Label>
-              <Input
-                id="clientName"
-                value={clientName}
-                onChange={(e) => setClientName(e.target.value)}
-                placeholder="e.g., Horizon Family Office"
-                className="bg-input border-border text-foreground"
-              />
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Fund & Policy Setup</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="fundName">Fund Name *</Label>
+                    <Input
+                      id="fundName"
+                      placeholder="e.g., Global Equity Fund"
+                      value={fundName}
+                      onChange={(e) => setFundName(e.target.value)}
+                    />
+                  </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="ips">Investment Policy Statement</Label>
-              <div className="flex items-center gap-3">
-                <Button variant="outline" className="w-full justify-start">
-                  <Upload className="mr-2 h-4 w-4" />
-                  Upload IPS (PDF)
+                  <div className="space-y-2">
+                    <Label htmlFor="clientName">Client Name (Optional)</Label>
+                    <Input
+                      id="clientName"
+                      placeholder="e.g., Smith Family Office"
+                      value={clientName}
+                      onChange={(e) => setClientName(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="ips">Investment Policy Statement</Label>
+                  <div className="border-2 border-dashed border-accent rounded-lg p-8 text-center hover:bg-accent/5 transition-colors cursor-pointer">
+                    <Upload className="w-8 h-8 text-accent mx-auto mb-2" />
+                    <p className="text-sm text-foreground">
+                      Click to upload or drag and drop
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      PDF (MAX. 10MB)
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">
+                    Set Risk Parameters
+                  </h3>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="dv01">
+                      Max Interest Rate Exposure (DV01)
+                    </Label>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id="dv01"
+                        type="number"
+                        value={dv01}
+                        onChange={(e) => setDv01(e.target.value)}
+                        className="flex-1"
+                      />
+                      <span className="text-muted-foreground">USD</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="concentration">Max Equity Concentration</Label>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id="concentration"
+                        type="number"
+                        value={concentration}
+                        onChange={(e) => setConcentration(e.target.value)}
+                        className="flex-1"
+                      />
+                      <span className="text-muted-foreground">%</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="sharpe">Target Sharpe Ratio</Label>
+                    <Input
+                      id="sharpe"
+                      type="number"
+                      step="0.1"
+                      value={sharpeRatio}
+                      onChange={(e) => setSharpeRatio(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <Button 
+                  onClick={handleNext}
+                  disabled={!fundName}
+                  className="w-full"
+                >
+                  Next: Connect Your Data
                 </Button>
-              </div>
-              <p className="text-xs text-muted-foreground">Upload your investment policy document for AI analysis</p>
-            </div>
+              </CardContent>
+            </Card>
           </div>
-
-          {/* Risk Parameters Section */}
-          <div className="space-y-6 pt-6 border-t border-border">
-            <h2 className="text-xl font-semibold text-foreground">Set Risk Parameters</h2>
-
-            <div className="space-y-2">
-              <Label htmlFor="dv01">Max Interest Rate Exposure (DV01)</Label>
-              <div className="flex items-center gap-3">
-                <Input
-                  id="dv01"
-                  type="number"
-                  value={dv01}
-                  onChange={(e) => setDv01(e.target.value)}
-                  className="bg-input border-border text-foreground"
-                />
-                <span className="text-muted-foreground min-w-fit">USD</span>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="concentration">Max Equity Concentration</Label>
-              <div className="flex items-center gap-3">
-                <Input
-                  id="concentration"
-                  type="number"
-                  value={concentration}
-                  onChange={(e) => setConcentration(e.target.value)}
-                  className="bg-input border-border text-foreground"
-                />
-                <span className="text-muted-foreground">%</span>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="sharpe">Target Sharpe Ratio</Label>
-              <Input
-                id="sharpe"
-                type="number"
-                step="0.1"
-                value={sharpeRatio}
-                onChange={(e) => setSharpeRatio(e.target.value)}
-                className="bg-input border-border text-foreground"
-              />
-            </div>
-          </div>
-
-          <Button 
-            onClick={handleNext}
-            className="w-full bg-primary hover:bg-primary-hover text-primary-foreground text-lg h-12"
-            disabled={!fundName}
-          >
-            Next: Connect Your Data
-          </Button>
-        </Card>
+        </div>
       </div>
     </div>
   );
