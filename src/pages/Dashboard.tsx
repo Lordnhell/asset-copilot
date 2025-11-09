@@ -8,6 +8,10 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AuditHistory } from "@/components/AuditHistory";
+import { KnowledgePanel } from "@/components/KnowledgePanel";
+import { ScenarioSandbox } from "@/components/ScenarioSandbox";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -198,6 +202,7 @@ const Dashboard = () => {
                 </div>
               </CardContent>
             </Card>
+
             <Card className="mb-8">
               <CardContent className="p-6">
                 <h2 className="text-lg font-semibold text-foreground mb-4">Command Center</h2>
@@ -207,9 +212,17 @@ const Dashboard = () => {
                 </div>
               </CardContent>
             </Card>
-            <div>
-              <h2 className="text-xl font-semibold text-foreground mb-4">Recent Analyses</h2>
-              <div className="space-y-3">
+
+            <Tabs defaultValue="recent" className="w-full">
+              <div className="flex items-center justify-between mb-4">
+                <TabsList>
+                  <TabsTrigger value="recent">Recent Analyses</TabsTrigger>
+                  <TabsTrigger value="audit">Audit History</TabsTrigger>
+                </TabsList>
+                <ScenarioSandbox />
+              </div>
+
+              <TabsContent value="recent" className="space-y-3">
                 {recentAnalyses.map((analysis, index) => (
                   <Card key={index} className="cursor-pointer hover:border-accent transition-colors" onClick={() => analysis.status === "draft" ? navigate("/confirmation") : navigate("/comparative-analysis")}>
                     <CardContent className="p-4 flex items-center justify-between">
@@ -221,8 +234,14 @@ const Dashboard = () => {
                     </CardContent>
                   </Card>
                 ))}
-              </div>
-            </div>
+              </TabsContent>
+
+              <TabsContent value="audit">
+                <AuditHistory />
+              </TabsContent>
+            </Tabs>
+            
+            <KnowledgePanel />
           </div>
         </main>
       </div>

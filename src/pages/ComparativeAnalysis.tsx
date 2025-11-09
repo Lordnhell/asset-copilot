@@ -9,12 +9,18 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import { ScenarioSandbox } from "@/components/ScenarioSandbox";
+import { KnowledgePanel } from "@/components/KnowledgePanel";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const ComparativeAnalysis = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [allocations, setAllocations] = useState([33, 33, 34]);
   const [isSimulating, setIsSimulating] = useState(false);
+  const [shareEmail, setShareEmail] = useState("");
+  const [shareMessage, setShareMessage] = useState("");
 
   const analyses = [
     {
@@ -122,6 +128,31 @@ const ComparativeAnalysis = () => {
     }, 2000);
   };
 
+  const handleShareAnalysis = () => {
+    if (!shareEmail) {
+      toast({
+        title: "Email Required",
+        description: "Please enter an email address to share the analysis.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Analysis Shared",
+      description: `Report has been sent to ${shareEmail}`,
+    });
+    setShareEmail("");
+    setShareMessage("");
+  };
+
+  const handleDownloadAuditPack = () => {
+    toast({
+      title: "Audit Pack Generated",
+      description: "Downloading JSON + PDF audit pack with full analysis metadata.",
+    });
+  };
+
   const portfolioMetrics = calculatePortfolioMetrics();
 
   return (
@@ -138,15 +169,59 @@ const ComparativeAnalysis = () => {
             <Home className="w-4 h-4" />
             Back to Dashboard
           </Button>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" size="sm" className="gap-2" onClick={handleDownloadAuditPack}>
+              <Download className="w-4 h-4" />
+              Download Audit Pack
+            </Button>
             <Button variant="outline" size="sm" className="gap-2" onClick={handleExportSummary}>
               <Download className="w-4 h-4" />
-              Export Trade Summary
+              Export Summary
             </Button>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Share2 className="w-4 h-4" />
-              Share Report
-            </Button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Share2 className="w-4 h-4" />
+                  Share Report
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Share Analysis</SheetTitle>
+                  <SheetDescription>
+                    Send this analysis to team members or bankers
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-6 space-y-4">
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-2 block">
+                      Recipient Email
+                    </label>
+                    <Input
+                      type="email"
+                      placeholder="investor@example.com"
+                      value={shareEmail}
+                      onChange={(e) => setShareEmail(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-2 block">
+                      Message (Optional)
+                    </label>
+                    <Textarea
+                      placeholder="Add a note for the recipient..."
+                      value={shareMessage}
+                      onChange={(e) => setShareMessage(e.target.value)}
+                      rows={4}
+                    />
+                  </div>
+                  <Button className="w-full" onClick={handleShareAnalysis}>
+                    Send Analysis
+                  </Button>
+                </div>
+              </SheetContent>
+            </Sheet>
+            <ScenarioSandbox />
             <Button size="sm" onClick={() => navigate("/processing")}>
               Run New Analysis
             </Button>
@@ -347,6 +422,7 @@ const ComparativeAnalysis = () => {
           Export Trade Summary
         </Button>
       </div>
+      <KnowledgePanel />
     </div>
   </div>
 );

@@ -1,5 +1,6 @@
 import { Home, TrendingUp, Database, Settings, User } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
+import { AlertsCenter } from "@/components/AlertsCenter";
 import {
   Sidebar,
   SidebarContent,
@@ -22,8 +23,9 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-r border-sidebar-border">
       <SidebarContent className="bg-sidebar text-sidebar-foreground">
-        <div className="p-6">
+        <div className="p-6 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-sidebar-foreground">QuantAI</h1>
+          <AlertsCenter />
         </div>
 
         <SidebarGroup>
