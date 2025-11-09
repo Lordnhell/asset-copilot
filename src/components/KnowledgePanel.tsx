@@ -19,10 +19,10 @@ const knowledgeItems = [
     category: "Pricing",
   },
   {
-    term: "Liquidity Score",
-    definition: "A 0-100 rating measuring how quickly an asset can be sold without significant price impact.",
-    example: "A score of 85 indicates excellent liquidity - suitable for short holding periods.",
-    category: "Trading",
+    term: "Credit & Interest Score",
+    definition: "A 0-100 rating combining credit quality and interest rate risk exposure to assess overall bond risk.",
+    example: "A score of 85 indicates strong credit fundamentals with moderate interest rate sensitivity.",
+    category: "Risk Metrics",
   },
   {
     term: "Sharpe Ratio",

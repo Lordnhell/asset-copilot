@@ -38,7 +38,7 @@ const ComparativeAnalysis = () => {
         dv01Per1mm: "$85",
         oasSpread: "12 bps",
       },
-      liquidityScore: 90,
+      creditInterestScore: 90,
       rating: "AAA",
       currency: "USD",
       insight: "Benchmark sovereign bond. Used for reference pricing and spread calculations.",
@@ -56,7 +56,7 @@ const ComparativeAnalysis = () => {
         dv01Per1mm: "$78",
         oasSpread: "0 bps",
       },
-      liquidityScore: 88,
+      creditInterestScore: 88,
       rating: "AAA",
       currency: "SGD",
       insight: "Benchmark sovereign bond. Used for reference pricing and spread calculations.",
@@ -74,10 +74,10 @@ const ComparativeAnalysis = () => {
         dv01Per1mm: "$52",
         oasSpread: "45 bps",
       },
-      liquidityScore: 82,
+      creditInterestScore: 82,
       rating: "AAA",
       currency: "SGD",
-      insight: "Quasi-sovereign credit with AAA rating. Moderate spread over SGS. Lower duration reduces interest rate risk but liquidity slightly below pure sovereigns.",
+      insight: "Quasi-sovereign credit with AAA rating. Moderate spread over SGS. Lower duration reduces interest rate risk with strong credit quality.",
     },
     {
       id: 4,
@@ -92,10 +92,10 @@ const ComparativeAnalysis = () => {
         dv01Per1mm: "$56",
         oasSpread: "88 bps",
       },
-      liquidityScore: 85,
+      creditInterestScore: 85,
       rating: "AA-",
       currency: "SGD",
-      insight: "Strong banking credit with good liquidity. Higher spread reflects bank sector risk premium. Consider concentration limits on financial sector exposure.",
+      insight: "Strong banking credit with solid fundamentals. Higher spread reflects bank sector risk premium. Consider concentration limits on financial sector exposure.",
     },
     {
       id: 5,
@@ -110,7 +110,7 @@ const ComparativeAnalysis = () => {
         dv01Per1mm: "$61",
         oasSpread: "125 bps",
       },
-      liquidityScore: 75,
+      creditInterestScore: 75,
       rating: "A",
       currency: "SGD",
       insight: "Real estate corporate credit. Higher yield compensates for sector-specific risk and lower rating. Wider spread reflects property market dynamics.",
@@ -377,13 +377,13 @@ const ComparativeAnalysis = () => {
                 </div>
               </div>
 
-              {/* Liquidity Score */}
+              {/* Credit & Interest Score */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-muted-foreground">Liquidity Score</span>
-                  <span className="text-sm font-semibold text-foreground">{analysis.liquidityScore}/100</span>
+                  <span className="text-sm text-muted-foreground">Credit & Interest Score</span>
+                  <span className="text-sm font-semibold text-foreground">{analysis.creditInterestScore}/100</span>
                 </div>
-                <Progress value={analysis.liquidityScore} className="h-2" />
+                <Progress value={analysis.creditInterestScore} className="h-2" />
               </div>
 
               {/* Co-Pilot Insight */}

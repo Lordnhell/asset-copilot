@@ -21,7 +21,7 @@ export type BondQuote = {
   rating?: string;
   oas_bps?: number;
   dv01_per_1mm?: number;
-  liquidity_score?: number;
+  creditInterestScore?: number; // 0 to 100 - combines credit quality and interest rate risk
   risk_score?: number | null;
   notes?: string;
   attachments?: string[];
