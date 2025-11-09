@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Home } from "lucide-react";
 
 const ManualInput = () => {
   const navigate = useNavigate();
@@ -27,6 +28,19 @@ const ManualInput = () => {
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-6xl mx-auto">
+        {/* Back to Dashboard Button */}
+        <div className="flex justify-end mb-6">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate("/dashboard")}
+            className="gap-2"
+          >
+            <Home className="w-4 h-4" />
+            Back to Dashboard
+          </Button>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Panel - PDF Viewer */}
           <div className="bg-card rounded-lg border border-border p-6">

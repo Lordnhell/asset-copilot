@@ -2,9 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { FileText, TrendingUp, AlertTriangle, BarChart } from "lucide-react";
+import { FileText, TrendingUp, AlertTriangle, BarChart, Home, Share2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ComparativeAnalysis = () => {
+  const navigate = useNavigate();
   const analyses = [
     {
       id: 1,
@@ -50,7 +52,28 @@ const ComparativeAnalysis = () => {
   return (
     <div className="min-h-screen bg-background p-6 md:p-12 animate-fade-in">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        {/* Header with Actions */}
+        <div className="flex items-center justify-between mb-6">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate("/dashboard")}
+            className="gap-2"
+          >
+            <Home className="w-4 h-4" />
+            Back to Dashboard
+          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" className="gap-2">
+              <Share2 className="w-4 h-4" />
+              Share Report
+            </Button>
+            <Button size="sm">
+              Run New Analysis
+            </Button>
+          </div>
+        </div>
+
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Comparative Analysis: Your NVDA FCN Quotes</h1>
           <p className="text-muted-foreground">AI-powered risk assessment and recommendations</p>

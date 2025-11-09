@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, FileText, Plug } from "lucide-react";
+import { Mail, FileText, Plug, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import ProgressSteps from "@/components/ProgressSteps";
 
@@ -53,9 +53,37 @@ const DataIntegration = () => {
     }, 1500);
   };
 
+  const handleBack = () => {
+    navigate("/fund-setup");
+  };
+
+  const handleCancel = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-6xl mx-auto">
+        {/* Back and Cancel Buttons */}
+        <div className="flex items-center justify-between mb-6">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleBack}
+            className="gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleCancel}
+          >
+            Cancel Setup
+          </Button>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Left Panel - Progress */}
           <div className="lg:col-span-1">

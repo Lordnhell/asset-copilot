@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Mail } from "lucide-react";
+import { Edit, Mail, Home } from "lucide-react";
 
 const Confirmation = () => {
   const navigate = useNavigate();
@@ -61,9 +61,27 @@ const Confirmation = () => {
     navigate("/calculating");
   };
 
+  const handleBackToDashboard = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="min-h-screen bg-background p-6 md:p-12 animate-fade-in">
       <div className="max-w-6xl mx-auto">
+        {/* Header with Back to Dashboard */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex-1" />
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleBackToDashboard}
+            className="gap-2"
+          >
+            <Home className="w-4 h-4" />
+            Back to Dashboard
+          </Button>
+        </div>
+
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Confirm Quotation Details</h1>
           <p className="text-muted-foreground">Please verify the details we extracted before risk analysis</p>
@@ -121,11 +139,18 @@ const Confirmation = () => {
           })}
         </div>
 
-        <div className="sticky bottom-6">
+        <div className="sticky bottom-6 flex gap-3">
+          <Button
+            variant="outline"
+            onClick={handleBackToDashboard}
+            className="w-auto"
+          >
+            Save & Exit
+          </Button>
           <Button
             onClick={handleProceed}
             disabled={confirmed.length === 0}
-            className="w-full bg-primary hover:bg-primary-hover text-primary-foreground text-lg h-12"
+            className="flex-1 bg-primary hover:bg-primary-hover text-primary-foreground text-lg h-12"
           >
             Proceed to Risk Analysis for {confirmed.length} Confirmed Quote{confirmed.length !== 1 ? "s" : ""}
           </Button>

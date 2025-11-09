@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Upload } from "lucide-react";
+import { Upload, Home } from "lucide-react";
 import ProgressSteps from "@/components/ProgressSteps";
 
 const FundSetup = () => {
@@ -25,9 +25,27 @@ const FundSetup = () => {
     navigate("/data-integration");
   };
 
+  const handleCancel = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-6xl mx-auto">
+        {/* Header with Cancel Button */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex-1" />
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleCancel}
+            className="gap-2"
+          >
+            <Home className="w-4 h-4" />
+            Exit to Dashboard
+          </Button>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Left Panel - Progress */}
           <div className="lg:col-span-1">
@@ -137,13 +155,21 @@ const FundSetup = () => {
                   </div>
                 </div>
 
-                <Button 
-                  onClick={handleNext}
-                  disabled={!fundName}
-                  className="w-full"
-                >
-                  Next: Connect Your Data
-                </Button>
+                <div className="flex gap-3">
+                  <Button 
+                    onClick={handleNext}
+                    disabled={!fundName}
+                    className="flex-1"
+                  >
+                    Next: Connect Your Data
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={handleCancel}
+                  >
+                    Cancel
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
