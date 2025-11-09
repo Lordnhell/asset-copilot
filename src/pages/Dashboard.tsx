@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Upload, FileText, ChevronDown, ChevronUp, TrendingUp, DollarSign, Globe, PieChart } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Sparkles, FileText, ChevronDown, ChevronUp, TrendingUp, DollarSign, Globe, PieChart, CheckCircle2 } from "lucide-react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -17,12 +18,25 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [command, setCommand] = useState("");
   const [isContextOpen, setIsContextOpen] = useState(true);
+  const [selectedQuotations, setSelectedQuotations] = useState<number[]>([]);
+
+  const parsedQuotations = [
+    { id: 1, issuer: "NVDA", product: "FCN", notional: "$5M", coupon: "8.5%", barrier: "70%", date: "Today" },
+    { id: 2, issuer: "TSLA", product: "Autocallable", notional: "$3M", coupon: "12%", barrier: "65%", date: "Today" },
+    { id: 3, issuer: "AAPL", product: "Reverse Convertible", notional: "$4M", coupon: "10%", barrier: "75%", date: "Yesterday" },
+  ];
 
   const recentAnalyses = [
     { title: "DRAFT: NVDA FCN Analysis", status: "draft", date: "Today" },
     { title: "JPM Corporate Bonds - Sep 15", status: "completed", date: "Sep 15" },
     { title: "UOB Structured Note - Sep 14", status: "completed", date: "Sep 14" },
   ];
+
+  const toggleQuotation = (id: number) => {
+    setSelectedQuotations(prev => 
+      prev.includes(id) ? prev.filter(qId => qId !== id) : [...prev, id]
+    );
+  };
 
   const portfolioContext = {
     totalDV01: 12500,
@@ -66,7 +80,84 @@ const Dashboard = () => {
         <AppSidebar />
         <main className="flex-1 bg-background p-6">
           <div className="max-w-6xl mx-auto">
-            <h1 className="text-3xl font-bold text-foreground mb-6">Good afternoon, Asset Manager</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-8">Good afternoon, Asset Manager</h1>
+            
+            {/* Command Center - Highlighted */}
+            <Card className="mb-8 border-2 border-primary shadow-lg bg-gradient-to-br from-primary/5 to-accent/5">
+              <CardContent className="p-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Sparkles className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-foreground">AI Command Center</h2>
+                    <p className="text-sm text-muted-foreground">Start your analysis with natural language or select parsed quotations</p>
+                  </div>
+                </div>
+
+                <Textarea 
+                  placeholder="Describe what you want to analyze... E.g., 'Compare the risk-return profiles of these NVDA structured notes against our current portfolio limits'" 
+                  className="mb-4 min-h-[100px] text-base"
+                  value={command} 
+                  onChange={(e) => setCommand(e.target.value)} 
+                />
+
+                {/* Parsed Quotations */}
+                {parsedQuotations.length > 0 && (
+                  <div className="mb-6">
+                    <h3 className="text-sm font-semibold text-foreground mb-3">Select Parsed Quotations to Analyze</h3>
+                    <div className="grid gap-2">
+                      {parsedQuotations.map((quote) => (
+                        <button
+                          key={quote.id}
+                          onClick={() => toggleQuotation(quote.id)}
+                          className={`p-4 rounded-lg border-2 text-left transition-all ${
+                            selectedQuotations.includes(quote.id)
+                              ? 'border-primary bg-primary/5'
+                              : 'border-border hover:border-primary/50 bg-card'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="font-semibold text-foreground">{quote.issuer} {quote.product}</span>
+                                <span className="text-xs text-muted-foreground">{quote.date}</span>
+                              </div>
+                              <div className="grid grid-cols-4 gap-3 text-sm">
+                                <div>
+                                  <span className="text-muted-foreground">Notional: </span>
+                                  <span className="text-foreground font-medium">{quote.notional}</span>
+                                </div>
+                                <div>
+                                  <span className="text-muted-foreground">Coupon: </span>
+                                  <span className="text-foreground font-medium">{quote.coupon}</span>
+                                </div>
+                                <div>
+                                  <span className="text-muted-foreground">Barrier: </span>
+                                  <span className="text-foreground font-medium">{quote.barrier}</span>
+                                </div>
+                              </div>
+                            </div>
+                            {selectedQuotations.includes(quote.id) && (
+                              <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 ml-2" />
+                            )}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <Button 
+                  onClick={() => navigate("/processing")} 
+                  size="lg"
+                  className="w-full bg-primary hover:bg-primary-hover text-primary-foreground font-semibold text-lg h-14"
+                >
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Start AI Analysis
+                </Button>
+              </CardContent>
+            </Card>
             
             {/* Pre-Trade Context Snapshot */}
             <Collapsible open={isContextOpen} onOpenChange={setIsContextOpen} className="mb-6">
@@ -174,7 +265,7 @@ const Dashboard = () => {
                           onClick={() => navigate("/processing")} 
                           className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
                         >
-                          <Upload className="w-4 h-4 mr-2" />
+                          <TrendingUp className="w-4 h-4 mr-2" />
                           Run New Analysis with These Limits
                         </Button>
                       </div>
@@ -199,16 +290,6 @@ const Dashboard = () => {
                     <span className="text-warning">⚠️</span>
                     <span className="text-sm text-foreground">High Concentration Alert: US Equities (58%)</span>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="mb-8">
-              <CardContent className="p-6">
-                <h2 className="text-lg font-semibold text-foreground mb-4">Command Center</h2>
-                <div className="flex gap-2">
-                  <Input placeholder="Paste an email, upload quotes, or ask a question... E.g., 'Analyze the 3 FCN quotes for NVDA I got today'" className="flex-1" value={command} onChange={(e) => setCommand(e.target.value)} />
-                  <Button onClick={() => navigate("/processing")}><Upload className="w-4 h-4 mr-2" />Upload</Button>
                 </div>
               </CardContent>
             </Card>

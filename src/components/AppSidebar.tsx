@@ -1,4 +1,4 @@
-import { Home, TrendingUp, Database, Settings, User } from "lucide-react";
+import { Home, TrendingUp, Database, Settings, User, FileText, Users, BarChart3 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { AlertsCenter } from "@/components/AlertsCenter";
 import {
@@ -15,6 +15,9 @@ import {
 const menuItems = [
   { title: "Co-Pilot Dashboard", url: "/dashboard", icon: Home },
   { title: "Portfolio Health", url: "/portfolio-health", icon: TrendingUp },
+  { title: "Analysis Reports", url: "/storage", icon: FileText },
+  { title: "Usage & Billing", url: "/usage", icon: BarChart3 },
+  { title: "Team Collaborators", url: "/collaborators", icon: Users },
   { title: "Data Sources", url: "/data-sources", icon: Database },
   { title: "Fund Settings", url: "/fund-settings", icon: Settings },
 ];
