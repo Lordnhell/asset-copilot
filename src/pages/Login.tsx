@@ -6,8 +6,8 @@ import { Label } from "@/components/ui/label";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@quantintel.com");
+  const [password, setPassword] = useState("demo123");
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +29,9 @@ const Login = () => {
             <h2 className="text-xl text-foreground">Risk Co-Pilot</h2>
             <p className="text-sm text-muted-foreground">
               Advanced portfolio analysis for institutional clients
+            </p>
+            <p className="text-xs text-accent mt-2">
+              🚀 Dev Mode: Pre-filled credentials
             </p>
           </div>
 
