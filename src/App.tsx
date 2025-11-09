@@ -3,7 +3,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
 import Login from "./pages/Login";
 import FundSetup from "./pages/FundSetup";
 import DataIntegration from "./pages/DataIntegration";
@@ -16,9 +15,6 @@ import PortfolioHealth from "./pages/PortfolioHealth";
 import DataSources from "./pages/DataSources";
 import FundSettings from "./pages/FundSettings";
 import ManualInput from "./pages/ManualInput";
-import Usage from "./pages/Usage";
-import Storage from "./pages/Storage";
-import Collaborators from "./pages/Collaborators";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,8 +26,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/fund-setup" element={<FundSetup />} />
           <Route path="/data-integration" element={<DataIntegration />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -43,9 +38,6 @@ const App = () => (
           <Route path="/calculating" element={<Calculating />} />
           <Route path="/comparative-analysis" element={<ComparativeAnalysis />} />
           <Route path="/manual-input" element={<ManualInput />} />
-          <Route path="/usage" element={<Usage />} />
-          <Route path="/storage" element={<Storage />} />
-          <Route path="/collaborators" element={<Collaborators />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
