@@ -1,9 +1,11 @@
-import { ArrowLeft, Plus, Check, X, RefreshCw, AlertCircle } from "lucide-react";
+import { Plus, Check, X, RefreshCw, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
 
 const DataSources = () => {
   const navigate = useNavigate();
@@ -70,21 +72,15 @@ const DataSources = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-6xl mx-auto">
-        <Button
-          variant="ghost"
-          onClick={() => navigate("/dashboard")}
-          className="mb-6"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Dashboard
-        </Button>
-
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold text-foreground">
-            Connected Data Sources
-          </h1>
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full">
+        <AppSidebar />
+        <main className="flex-1 bg-background p-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-3xl font-bold text-foreground">
+                Connected Data Sources
+              </h1>
           <Button>
             <Plus className="w-4 h-4 mr-2" />
             Add New Source
@@ -189,8 +185,10 @@ const DataSources = () => {
             </div>
           </CardContent>
         </Card>
+          </div>
+        </main>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 

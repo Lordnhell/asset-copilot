@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
 
 const FundSettings = () => {
   const navigate = useNavigate();
@@ -19,20 +20,14 @@ const FundSettings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-6xl mx-auto">
-        <Button
-          variant="ghost"
-          onClick={() => navigate("/dashboard")}
-          className="mb-6"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Dashboard
-        </Button>
-
-        <h1 className="text-3xl font-bold text-foreground mb-6">
-          Fund Configuration
-        </h1>
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full">
+        <AppSidebar />
+        <main className="flex-1 bg-background p-6">
+          <div className="max-w-6xl mx-auto">
+            <h1 className="text-3xl font-bold text-foreground mb-6">
+              Fund Configuration
+            </h1>
 
         <Tabs defaultValue="risk" className="w-full">
           <TabsList>
@@ -122,8 +117,10 @@ const FundSettings = () => {
             </Card>
           </TabsContent>
         </Tabs>
+          </div>
+        </main>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 

@@ -11,7 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Home } from "lucide-react";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
 
 const ManualInput = () => {
   const navigate = useNavigate();
@@ -26,22 +27,12 @@ const ManualInput = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Back to Dashboard Button */}
-        <div className="flex justify-end mb-6">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigate("/dashboard")}
-            className="gap-2"
-          >
-            <Home className="w-4 h-4" />
-            Back to Dashboard
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full">
+        <AppSidebar />
+        <main className="flex-1 bg-background p-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Panel - PDF Viewer */}
           <div className="bg-card rounded-lg border border-border p-6">
             <h2 className="text-xl font-semibold text-foreground mb-4">
@@ -140,8 +131,10 @@ const ManualInput = () => {
             </Card>
           </div>
         </div>
+          </div>
+        </main>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 
