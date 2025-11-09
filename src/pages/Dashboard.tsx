@@ -21,15 +21,17 @@ const Dashboard = () => {
   const [selectedQuotations, setSelectedQuotations] = useState<number[]>([]);
 
   const parsedQuotations = [
-    { id: 1, bank: "J.P. Morgan", product: "UST 10Y 2034", status: "ready" },
-    { id: 2, bank: "UOB Kay Hian", product: "SGS 10Y 2033", status: "ready" },
-    { id: 3, bank: "DBS Bank", product: "Temasek 2030", status: "ready" },
+    { id: 1, bank: "J.P. Morgan", product: "UST 10Y 2034", category: "Sovereign", status: "ready" },
+    { id: 2, bank: "UOB Kay Hian", product: "SGS 10Y 2033", category: "Sovereign", status: "ready" },
+    { id: 3, bank: "DBS Bank", product: "Temasek 2030", category: "Corporate", status: "ready" },
+    { id: 4, bank: "J.P. Morgan", product: "DBS Senior 2030", category: "Corporate", status: "ready" },
+    { id: 5, bank: "UOB Kay Hian", product: "CapitaLand 2031", category: "Corporate", status: "ready" },
   ];
 
   const recentAnalyses = [
-    { title: "DRAFT: UST 10Y 2034 Analysis", status: "draft", date: "Today" },
-    { title: "JPM Temasek 2030 Comparison - Sep 15", status: "completed", date: "Sep 15" },
-    { title: "UOB SGS 2033 Quote Review - Sep 14", status: "completed", date: "Sep 14" },
+    { title: "DRAFT: DBS Senior 2030 Analysis", status: "draft", date: "Today", category: "Corporate" },
+    { title: "Temasek 2030 Comparison - Sep 15", status: "completed", date: "Sep 15", category: "Corporate" },
+    { title: "CapitaLand 2031 Quote Review - Sep 14", status: "completed", date: "Sep 14", category: "Corporate" },
   ];
 
   const toggleQuotation = (id: number) => {
@@ -90,7 +92,7 @@ const Dashboard = () => {
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-foreground">AI Command Center</h2>
-                    <p className="text-sm text-muted-foreground">Start your analysis with natural language or select parsed quotations</p>
+                    <p className="text-sm text-muted-foreground">Corporate bond analysis focuses on credit, liquidity, and yield spread over sovereigns</p>
                   </div>
                 </div>
 
@@ -267,14 +269,52 @@ const Dashboard = () => {
                   <h2 className="text-xl font-semibold text-foreground">Portfolio Health</h2>
                   <div className="text-4xl font-bold text-success">82/100</div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div className="flex items-center gap-2">
                     <span className="text-success">✓</span>
                     <span className="text-sm text-foreground">Total DV01: $12,500 (Within Limit)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-success">✓</span>
-                    <span className="text-sm text-foreground">Top Issuer: US Treasury 28% (Healthy)</span>
+                    <span className="text-sm text-foreground">Weighted Avg Rating: AA+ (Strong)</span>
+                  </div>
+                </div>
+                <div className="pt-4 border-t border-border">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <h3 className="text-xs font-semibold text-muted-foreground mb-2">SOVEREIGN BONDS</h3>
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">DV01:</span>
+                          <span className="font-semibold text-foreground">$7,500</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Exposure:</span>
+                          <span className="font-semibold text-foreground">$9.1M (60%)</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Avg Rating:</span>
+                          <span className="font-semibold text-foreground">AAA</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-semibold text-muted-foreground mb-2">CORPORATE BONDS</h3>
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">DV01:</span>
+                          <span className="font-semibold text-foreground">$5,000</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Exposure:</span>
+                          <span className="font-semibold text-foreground">$6.1M (40%)</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Avg Rating:</span>
+                          <span className="font-semibold text-foreground">AA-</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardContent>

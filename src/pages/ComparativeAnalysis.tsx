@@ -24,30 +24,14 @@ const ComparativeAnalysis = () => {
   const [shareEmail, setShareEmail] = useState("");
   const [shareMessage, setShareMessage] = useState("");
 
-  const analyses = [
+  const allAnalyses = [
     {
       id: 1,
-      bank: "UOB Kay Hian",
-      security: "SGS 10Y 2033",
-      score: 82,
-      scoreColor: "text-success",
-      metrics: {
-        yieldToMaturity: "2.95%",
-        duration: "8.2 years",
-        dv01Per1mm: "$78",
-        oasSpread: "0 bps",
-      },
-      liquidityScore: 88,
-      rating: "AAA",
-      currency: "SGD",
-      insight: "Best risk-adjusted profile with excellent sovereign credit quality. High liquidity score and tight spread make this ideal for core portfolio holdings.",
-    },
-    {
-      id: 2,
       bank: "J.P. Morgan",
       security: "UST 10Y 2034",
-      score: 76,
-      scoreColor: "text-warning",
+      category: "Sovereign" as const,
+      score: null,
+      scoreColor: "text-muted-foreground",
       metrics: {
         yieldToMaturity: "4.35%",
         duration: "8.9 years",
@@ -57,14 +41,33 @@ const ComparativeAnalysis = () => {
       liquidityScore: 90,
       rating: "AAA",
       currency: "USD",
-      insight: "Higher yield compensates for FX exposure. Excellent liquidity profile and AAA rating. Consider currency hedge cost when sizing.",
+      insight: "Benchmark sovereign bond. Used for reference pricing and spread calculations.",
+    },
+    {
+      id: 2,
+      bank: "UOB Kay Hian",
+      security: "SGS 10Y 2033",
+      category: "Sovereign" as const,
+      score: null,
+      scoreColor: "text-muted-foreground",
+      metrics: {
+        yieldToMaturity: "2.95%",
+        duration: "8.2 years",
+        dv01Per1mm: "$78",
+        oasSpread: "0 bps",
+      },
+      liquidityScore: 88,
+      rating: "AAA",
+      currency: "SGD",
+      insight: "Benchmark sovereign bond. Used for reference pricing and spread calculations.",
     },
     {
       id: 3,
       bank: "DBS Bank",
       security: "Temasek 2030",
-      score: 68,
-      scoreColor: "text-destructive",
+      category: "Corporate" as const,
+      score: 85,
+      scoreColor: "text-success",
       metrics: {
         yieldToMaturity: "3.45%",
         duration: "5.4 years",
@@ -74,9 +77,48 @@ const ComparativeAnalysis = () => {
       liquidityScore: 82,
       rating: "AAA",
       currency: "SGD",
-      insight: "Corporate credit with AAA rating. Moderate spread over SGS. Lower duration reduces interest rate risk but liquidity slightly below sovereigns.",
+      insight: "Quasi-sovereign credit with AAA rating. Moderate spread over SGS. Lower duration reduces interest rate risk but liquidity slightly below pure sovereigns.",
+    },
+    {
+      id: 4,
+      bank: "J.P. Morgan",
+      security: "DBS Senior 2030",
+      category: "Corporate" as const,
+      score: 78,
+      scoreColor: "text-warning",
+      metrics: {
+        yieldToMaturity: "3.88%",
+        duration: "5.8 years",
+        dv01Per1mm: "$56",
+        oasSpread: "88 bps",
+      },
+      liquidityScore: 85,
+      rating: "AA-",
+      currency: "SGD",
+      insight: "Strong banking credit with good liquidity. Higher spread reflects bank sector risk premium. Consider concentration limits on financial sector exposure.",
+    },
+    {
+      id: 5,
+      bank: "UOB Kay Hian",
+      security: "CapitaLand 2031",
+      category: "Corporate" as const,
+      score: 72,
+      scoreColor: "text-destructive",
+      metrics: {
+        yieldToMaturity: "4.25%",
+        duration: "6.2 years",
+        dv01Per1mm: "$61",
+        oasSpread: "125 bps",
+      },
+      liquidityScore: 75,
+      rating: "A",
+      currency: "SGD",
+      insight: "Real estate corporate credit. Higher yield compensates for sector-specific risk and lower rating. Wider spread reflects property market dynamics.",
     },
   ];
+
+  // Filter to show only corporate bonds in comparison
+  const analyses = allAnalyses.filter(a => a.category === "Corporate");
 
   const handleAllocationChange = (index: number, value: number[]) => {
     const newAllocations = [...allocations];
@@ -241,7 +283,10 @@ const ComparativeAnalysis = () => {
 
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Comparative Bond Analysis</h1>
-          <p className="text-muted-foreground">AI-powered risk assessment and recommendations</p>
+          <p className="text-muted-foreground">AI-powered comparison of corporate bond risk and yield metrics relative to sovereign benchmarks</p>
+          <Badge variant="outline" className="mt-2 border-accent text-accent">
+            Comparing Corporate Bonds Only — Sovereigns Used as Benchmarks
+          </Badge>
         </div>
 
         {/* Co-Pilot Insight Banner */}
@@ -253,13 +298,30 @@ const ComparativeAnalysis = () => {
             <div className="flex-1">
               <h2 className="text-lg font-semibold text-foreground mb-2">Co-Pilot Insight</h2>
               <p className="text-foreground">
-                Based on your IPS and remaining DV01 headroom, <span className="font-semibold">SGS 10Y 2033 (UOB Kay Hian)</span> presents 
-                the best risk-adjusted choice. AAA sovereign credit with excellent liquidity and minimal spread. 
-                The lower DV01 per $1mm allows comfortable position sizing within your interest rate risk limits.
+                Based on your IPS and remaining DV01 headroom, <span className="font-semibold">Temasek 2030 (DBS Bank)</span> presents 
+                the best risk-adjusted corporate bond choice. AAA quasi-sovereign credit with 45 bps spread over SGS benchmark. 
+                Lower duration reduces interest rate risk while offering attractive yield pickup over government bonds.
               </p>
             </div>
           </div>
         </Card>
+
+        {/* No Corporate Bonds Warning */}
+        {analyses.length === 0 && (
+          <Card className="bg-warning/10 border-warning p-8 mb-8">
+            <div className="text-center">
+              <AlertTriangle className="h-12 w-12 text-warning mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-foreground mb-2">No Corporate Bond Quotes Found</h3>
+              <p className="text-muted-foreground mb-4">
+                Upload or connect data sources with corporate bond term sheets to compare. 
+                Sovereign bonds are available as benchmarks but are not included in comparative analysis.
+              </p>
+              <Button onClick={() => navigate("/data-sources")}>
+                Connect Data Sources
+              </Button>
+            </div>
+          </Card>
+        )}
 
         {/* Analysis Cards */}
         <div className="grid lg:grid-cols-3 gap-6">
@@ -272,13 +334,21 @@ const ComparativeAnalysis = () => {
                     <h3 className="text-xl font-bold text-foreground mb-1">{analysis.bank}</h3>
                     <Badge variant="outline" className="border-border">{analysis.security}</Badge>
                   </div>
-                </div>
-                <div className={`text-5xl font-bold ${analysis.scoreColor} mb-2`}>
-                  {analysis.score}
-                  <span className="text-2xl text-muted-foreground">/100</span>
-                </div>
-                <p className="text-sm text-muted-foreground">QuantAI Risk Score</p>
-              </div>
+                 </div>
+                 {analysis.score !== null ? (
+                   <>
+                     <div className={`text-5xl font-bold ${analysis.scoreColor} mb-2`}>
+                       {analysis.score}
+                       <span className="text-2xl text-muted-foreground">/100</span>
+                     </div>
+                     <p className="text-sm text-muted-foreground">QuantAI Risk Score</p>
+                   </>
+                 ) : (
+                   <div className="text-sm text-muted-foreground italic">
+                     Benchmark Only - Not Scored
+                   </div>
+                 )}
+               </div>
 
               {/* Key Metrics */}
               <div className="space-y-3 py-4 border-y border-border">

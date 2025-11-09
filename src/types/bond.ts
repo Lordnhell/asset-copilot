@@ -4,6 +4,7 @@ export type BondQuote = {
   bank: string;
   issuer: string;
   security_name: string;
+  category: "Corporate" | "Sovereign";
   isin?: string;
   cusip?: string;
   currency: "SGD" | "USD" | "AUD" | "GBP" | string;
@@ -21,6 +22,7 @@ export type BondQuote = {
   oas_bps?: number;
   dv01_per_1mm?: number;
   liquidity_score?: number;
+  risk_score?: number | null;
   notes?: string;
   attachments?: string[];
 };
