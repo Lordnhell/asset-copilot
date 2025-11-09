@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 const Calculating = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
+
+  const handleCancel = () => {
+    navigate("/dashboard");
+  };
 
   const steps = [
     { icon: "🔍", text: "Selecting optimal quant models..." },
@@ -17,23 +23,47 @@ const Calculating = () => {
     steps.forEach((_, index) => {
       const timer = setTimeout(() => {
         setCurrentStep(index);
-      }, index * 2500);
+      }, index * 2000);
       timers.push(timer);
     });
 
     const finalTimer = setTimeout(() => {
       navigate("/comparative-analysis");
-    }, steps.length * 2500 + 500);
+    }, steps.length * 2000 + 500);
     timers.push(finalTimer);
 
     return () => timers.forEach(timer => clearTimeout(timer));
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-6">
-      <div className="text-center space-y-8 animate-fade-in">
+    <div className="min-h-screen bg-background flex items-center justify-center p-6 relative overflow-hidden">
+      {/* Cancel Button */}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={handleCancel}
+        className="absolute top-6 right-6 z-20"
+      >
+        <X className="w-5 h-5" />
+      </Button>
+
+      {/* Animated circuit board pattern */}
+      <div className="absolute inset-0 opacity-[0.15]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px),
+              linear-gradient(180deg, hsl(var(--primary)) 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      <div className="text-center space-y-8 animate-fade-in relative z-10">
         <div className="flex justify-center mb-8">
-          <div className="bg-accent/10 p-8 rounded-full animate-pulse-slow">
+          <div className="bg-primary/10 p-8 rounded-full animate-pulse-slow">
             <div className="text-6xl">{steps[currentStep]?.icon}</div>
           </div>
         </div>
@@ -52,10 +82,15 @@ const Calculating = () => {
               />
             ))}
           </div>
-          <p className="text-sm text-muted-foreground">
-            Running quantitative risk models...
-          </p>
         </div>
+
+        <Button
+          variant="outline"
+          onClick={handleCancel}
+          className="mt-8"
+        >
+          Cancel Analysis
+        </Button>
       </div>
     </div>
   );
