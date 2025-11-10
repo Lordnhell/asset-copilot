@@ -12,7 +12,7 @@ const DataIntegration = () => {
 
   const steps = [
     { label: "Account", status: "completed" as const },
-    { label: "Fund Setup", status: "completed" as const },
+    { label: "Portfolio Setup", status: "completed" as const },
     { label: "Data Integration", status: "active" as const },
   ];
 
@@ -54,7 +54,7 @@ const DataIntegration = () => {
   };
 
   const handleBack = () => {
-    navigate("/fund-setup");
+    navigate("/portfolio-setup");
   };
 
   const handleCancel = () => {

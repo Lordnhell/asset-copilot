@@ -11,7 +11,7 @@ const Login = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/fund-setup");
+    navigate("/portfolio-setup");
   };
 
   return (

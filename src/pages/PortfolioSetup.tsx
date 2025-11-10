@@ -7,9 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Upload, Home } from "lucide-react";
 import ProgressSteps from "@/components/ProgressSteps";
 
-const FundSetup = () => {
+const PortfolioSetup = () => {
   const navigate = useNavigate();
-  const [fundName, setFundName] = useState("");
+  const [portfolioName, setPortfolioName] = useState("");
   const [clientName, setClientName] = useState("");
   const [dv01, setDv01] = useState("500000");
   const [concentration, setConcentration] = useState("15");
@@ -17,7 +17,7 @@ const FundSetup = () => {
 
   const steps = [
     { label: "Account", status: "completed" as const },
-    { label: "Fund Setup", status: "active" as const },
+    { label: "Portfolio Setup", status: "active" as const },
     { label: "Data Integration", status: "pending" as const },
   ];
 
@@ -61,26 +61,26 @@ const FundSetup = () => {
           <div className="lg:col-span-3">
             <div className="mb-6">
               <h1 className="text-3xl font-bold text-foreground mb-2">
-                Set up your first fund
+                Set up your first portfolio
               </h1>
               <p className="text-muted-foreground">
-                Configure your fund details and risk parameters
+                Configure your portfolio details and risk parameters
               </p>
             </div>
 
             <Card>
               <CardHeader>
-                <CardTitle>Fund & Policy Setup</CardTitle>
+                <CardTitle>Portfolio & Policy Setup</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="fundName">Fund Name *</Label>
+                    <Label htmlFor="portfolioName">Portfolio Name *</Label>
                     <Input
-                      id="fundName"
-                      placeholder="e.g., Global Equity Fund"
-                      value={fundName}
-                      onChange={(e) => setFundName(e.target.value)}
+                      id="portfolioName"
+                      placeholder="e.g., Global Equity Portfolio"
+                      value={portfolioName}
+                      onChange={(e) => setPortfolioName(e.target.value)}
                     />
                   </div>
 
@@ -158,7 +158,7 @@ const FundSetup = () => {
                 <div className="flex gap-3">
                   <Button 
                     onClick={handleNext}
-                    disabled={!fundName}
+                    disabled={!portfolioName}
                     className="flex-1"
                   >
                     Next: Connect Your Data
@@ -179,4 +179,4 @@ const FundSetup = () => {
   );
 };
 
-export default FundSetup;
+export default PortfolioSetup;

@@ -19,7 +19,7 @@ const menuItems = [
   { title: "Usage & Billing", url: "/usage", icon: BarChart3 },
   { title: "Team Collaborators", url: "/collaborators", icon: Users },
   { title: "Data Sources", url: "/data-sources", icon: Database },
-  { title: "Fund Settings", url: "/fund-settings", icon: Settings },
+  { title: "Portfolio Settings", url: "/portfolio-settings", icon: Settings },
 ];
 
 export function AppSidebar() {
@@ -60,7 +60,7 @@ export function AppSidebar() {
           </div>
           <div className="flex-1 text-sm">
             <p className="font-medium">Asset Manager</p>
-            <p className="text-xs text-sidebar-foreground/70">admin@fund.com</p>
+            <p className="text-xs text-sidebar-foreground/70">admin@portfolio.com</p>
           </div>
         </div>
       </SidebarFooter>

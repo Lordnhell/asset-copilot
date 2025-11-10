@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import FundSetup from "./pages/FundSetup";
+import PortfolioSetup from "./pages/PortfolioSetup";
 import DataIntegration from "./pages/DataIntegration";
 import Dashboard from "./pages/Dashboard";
 import Processing from "./pages/Processing";
@@ -13,7 +13,7 @@ import Calculating from "./pages/Calculating";
 import ComparativeAnalysis from "./pages/ComparativeAnalysis";
 import PortfolioHealth from "./pages/PortfolioHealth";
 import DataSources from "./pages/DataSources";
-import FundSettings from "./pages/FundSettings";
+import PortfolioSettings from "./pages/PortfolioSettings";
 import ManualInput from "./pages/ManualInput";
 import NotFound from "./pages/NotFound";
 import Usage from "./pages/Usage";
@@ -30,7 +30,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/fund-setup" element={<FundSetup />} />
+          <Route path="/portfolio-setup" element={<PortfolioSetup />} />
           <Route path="/data-integration" element={<DataIntegration />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/portfolio-health" element={<PortfolioHealth />} />
@@ -38,7 +38,7 @@ const App = () => (
           <Route path="/usage" element={<Usage />} />
           <Route path="/collaborators" element={<Collaborators />} />
           <Route path="/data-sources" element={<DataSources />} />
-          <Route path="/fund-settings" element={<FundSettings />} />
+          <Route path="/portfolio-settings" element={<PortfolioSettings />} />
           <Route path="/processing" element={<Processing />} />
           <Route path="/confirmation" element={<Confirmation />} />
           <Route path="/calculating" element={<Calculating />} />

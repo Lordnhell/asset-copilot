@@ -9,14 +9,14 @@ import { toast } from "sonner";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 
-const FundSettings = () => {
+const PortfolioSettings = () => {
   const navigate = useNavigate();
   const [maxDV01, setMaxDV01] = useState("15000");
   const [maxEquityConcentration, setMaxEquityConcentration] = useState("30");
   const [targetSharpe, setTargetSharpe] = useState("1.5");
 
   const handleSave = () => {
-    toast.success("Fund settings saved successfully!");
+    toast.success("Portfolio settings saved successfully!");
   };
 
   return (
@@ -26,7 +26,7 @@ const FundSettings = () => {
         <main className="flex-1 bg-background p-6">
           <div className="max-w-6xl mx-auto">
             <h1 className="text-3xl font-bold text-foreground mb-6">
-              Fund Configuration
+              Portfolio Configuration
             </h1>
 
         <Tabs defaultValue="risk" className="w-full">
@@ -85,7 +85,7 @@ const FundSettings = () => {
 
                 <div className="flex gap-4">
                   <Button onClick={handleSave}>Save Changes</Button>
-                  <Button variant="outline">Add New Fund</Button>
+                  <Button variant="outline">Add New Portfolio</Button>
                 </div>
               </CardContent>
             </Card>
@@ -111,7 +111,7 @@ const FundSettings = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Manage team member access to this fund.
+                  Manage team member access to this portfolio.
                 </p>
               </CardContent>
             </Card>
@@ -124,4 +124,4 @@ const FundSettings = () => {
   );
 };
 
-export default FundSettings;
+export default PortfolioSettings;

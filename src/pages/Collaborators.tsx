@@ -18,7 +18,7 @@ const Collaborators = () => {
     {
       id: 1,
       name: "Sarah Johnson",
-      email: "sarah.j@fund.com",
+      email: "sarah.j@portfolio.com",
       role: "Admin",
       reportsGenerated: 12,
       lastActive: "Today",
@@ -27,7 +27,7 @@ const Collaborators = () => {
     {
       id: 2,
       name: "Michael Chen",
-      email: "michael.c@fund.com",
+      email: "michael.c@portfolio.com",
       role: "Analyst",
       reportsGenerated: 8,
       lastActive: "2 hours ago",
@@ -36,7 +36,7 @@ const Collaborators = () => {
     {
       id: 3,
       name: "Emily Rodriguez",
-      email: "emily.r@fund.com",
+      email: "emily.r@portfolio.com",
       role: "Analyst",
       reportsGenerated: 7,
       lastActive: "Yesterday",
@@ -45,7 +45,7 @@ const Collaborators = () => {
     {
       id: 4,
       name: "David Park",
-      email: "david.p@fund.com",
+      email: "david.p@portfolio.com",
       role: "Viewer",
       reportsGenerated: 3,
       lastActive: "3 days ago",
@@ -54,7 +54,7 @@ const Collaborators = () => {
     {
       id: 5,
       name: "Lisa Thompson",
-      email: "lisa.t@fund.com",
+      email: "lisa.t@portfolio.com",
       role: "Analyst",
       reportsGenerated: 2,
       lastActive: "1 week ago",
